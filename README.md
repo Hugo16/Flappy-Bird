@@ -2,4 +2,4 @@
 
 A canvas version of a classic game.
 
-(http://flappybird.xiexiaoguo.com/ "Play")
+[Play](http://flappybird.xiexiaoguo.com/ "Play")
