@@ -27,13 +27,13 @@
             this.SourceUtil = new SourceUtil();
             // 加载素材
             this.SourceUtil.loadSounds(function (allAudio, length, loadedAudioCount) {
-                if (loadedAudioCount == length) {
+                if (loadedAudioCount === length) {
                     // 获取所有音频
                     self.allAudio = allAudio;
                 }
             });
             this.SourceUtil.loadImages(function (allImages, length, loadedImagesCount) {
-                if (loadedImagesCount == length) {
+                if (loadedImagesCount === length) {
                     // 设置背景
                     self.canvas.style.background = "url(" + allImages.bgDay.src + ")";
                     self.allImages = allImages;
@@ -70,6 +70,8 @@
                 self.allAudio.wing.currentTime = 0;
                 self.allAudio.wing.play();
             };
+            self.canvas.removeEventListener("tap",self.canvas.onclick);
+            self.canvas.addEventListener("tap", self.canvas.onclick);
             // 场景循环绘制
             this.loopTimer = setInterval(function () {
                 self.updateLoop();
@@ -93,14 +95,16 @@
             this.ctx.drawImage(this.allImages.tutorial, this.canvas.width / 2 - 57, 150);
             this.ctx.drawImage(this.allImages.textReady, this.canvas.width / 2 - 102, 250);
             // 添加点击事件
-            this.canvas.onclick = function () {
+            this.canvas.onclick = function (e) {
+                e.preventDefault();
                 // 播放开始声音
                 self.allAudio.start.play();
                 self.run();
             };
+            this.canvas.addEventListener("tap", this.canvas.onclick);
             window.document.onkeydown = function (event) {
                 let e = event || window.event;
-                if (e.keyCode == 32) {
+                if (e.keyCode === 32) {
                     self.canvas.onclick();
                 }
             };
@@ -114,6 +118,7 @@
             // 更改点击事件
             this.canvas.onclick = function () {
             };
+            self.canvas.removeEventListener("tap",self.canvas.onclick);
             // 播放掉落声音
             self.allAudio.fall.play();
             // 鸟的垂死挣扎
@@ -129,7 +134,11 @@
                     clearInterval(self.gameOverTimer);
                     self.canvas.onclick = function () {
                         self = new Game(self.option);
-                    }
+                    };
+                    self.canvas.addEventListener("tap", function(e){
+                        e.preventDefault();
+                        self = new Game(self.option);
+                    });
                 }
             }, 1000 / self.fps);
         },
@@ -160,7 +169,7 @@
                 this.pipeArr[i].render(this.ctx);
             }
             // 每100帧绘制新的管子
-            if (this.frameUtil.currentFrame % 100 == 0) {
+            if (this.frameUtil.currentFrame % 100 === 0) {
                 this.pipeArr.push(new Pipe({
                     img1: this.allImages.pipeDown,
                     img2: this.allImages.pipeUp,

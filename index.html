@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="height=device-height, user-scalable=no, initial-scale=1">
     <title>flappy bird</title>
     <style>
         * {
@@ -27,6 +29,12 @@
             left: 0;
             right: 0;
             transform: scale(1.5);
+        }
+
+        @media screen and (max-width: 768px) {
+            canvas {
+                margin: 30% auto;
+            }
         }
     </style>
     <script src="source.js"></script>
