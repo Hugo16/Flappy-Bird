@@ -2,4 +2,4 @@
 
 A canvas version of a classic game.
 
-[Play](http://flappybird.xiexiaoguo.com/ "Play")
+[Play](https://hugo16.github.io/Flappy-Bird/ "Play")
